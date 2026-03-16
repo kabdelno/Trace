@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trace — Your Health in Your Hands</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose:    #A020C8;
+      --rose-lt: #C97EE8;
+      --cream:   #FFFFFF;
+      --ink:     #0D0D1A;
+      --muted:   #6B6B8A;
+      --card:    #F7F4FE;
+      --border:  #E2D9F3;
+      --grad:    linear-gradient(135deg, #C020E0 0%, #6030F0 55%, #2090F8 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'DM Sans', sans-serif; font-size: 1.5rem; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -.5px; }
+    .nav-cta {
+      background: var(--grad); color: #fff;
+      padding: .55rem 1.4rem; border-radius: 50px;
+      font-size: .85rem; font-weight: 600; text-decoration: none;
+      transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; place-items: center;
+      padding: 8rem 3rem 5rem;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, #EDE0FF 0%, transparent 70%),
+        var(--cream);
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1.5px solid var(--rose-lt);
+      color: var(--rose); font-size: .78rem; font-weight: 600;
+      padding: .35rem 1rem; border-radius: 50px; margin-bottom: 1.6rem;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      line-height: 1.08;
+      max-width: 780px; margin: 0 auto .6rem;
+      color: var(--ink);
+    }
+    .hero h1 em { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); font-weight: 400;
+      max-width: 520px; margin: 0 auto 2.4rem; line-height: 1.65;
+    }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--grad); color: #fff;
+      padding: .85rem 2.2rem; border-radius: 50px;
+      font-size: .95rem; font-weight: 600; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(120,30,220,.25);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(120,30,220,.4); }
+    .btn-ghost {
+      padding: .85rem 2.2rem; border-radius: 50px;
+      font-size: .95rem; font-weight: 600; text-decoration: none;
+      border: 1.5px solid var(--border); color: var(--ink);
+      transition: border-color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--rose); }
+
+    .hero-stat-row {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem; padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat h3 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat p  { font-size: .82rem; color: var(--muted); margin-top: .25rem; }
+
+    /* ── PROBLEM ── */
+    .section { padding: 6rem 3rem; max-width: 1080px; margin: 0 auto; }
+    .label {
+      font-size: .75rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15; max-width: 640px;
+    }
+    .section-title em { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
+    .section-body { color: var(--muted); line-height: 1.75; max-width: 560px; margin-top: 1.2rem; font-size: 1.05rem; }
+
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .problem-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+    }
+    .problem-card .num {
+      font-family: 'DM Serif Display', serif; font-size: 2.6rem;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;
+    }
+    .problem-card p { color: var(--muted); font-size: .9rem; margin-top: .6rem; line-height: 1.6; }
+
+    /* ── SOLUTION ── */
+    .solution-wrapper {
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 50%, #EDE0FF 0%, transparent 65%),
+        var(--cream);
+      padding: 6rem 0;
+    }
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center; max-width: 1080px; margin: 0 auto; padding: 0 3rem;
+    }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .phone-mock {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 28px; padding: 2.5rem 2rem;
+      box-shadow: 0 20px 60px rgba(100,30,200,.12);
+      aspect-ratio: 9/16; max-width: 280px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .mock-bar { height: 8px; border-radius: 4px; background: var(--border); }
+    .mock-bar.accent { background: var(--rose-lt); width: 60%; }
+    .mock-chart {
+      flex: 1; background: linear-gradient(160deg, #EDE0FF 0%, #fff 100%);
+      border-radius: 12px; border: 1px solid var(--border);
+      display: flex; align-items: flex-end; padding: 1rem; gap: .4rem;
+    }
+    .bar-item { flex: 1; border-radius: 4px 4px 0 0; background: var(--grad); opacity: .3; }
+    .bar-item:nth-child(3) { opacity: .9; height: 80%; }
+    .bar-item:nth-child(2) { height: 55%; opacity: .6; }
+    .bar-item:nth-child(4) { height: 65%; opacity: .5; }
+    .bar-item:nth-child(1) { height: 35%; }
+    .bar-item:nth-child(5) { height: 45%; opacity: .4; }
+    .mock-tag {
+      background: #EDE0FF; color: var(--rose);
+      font-size: .75rem; font-weight: 600; padding: .4rem .9rem;
+      border-radius: 50px; align-self: flex-start;
+    }
+
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 1.4rem; margin-top: 2.5rem; }
+    .feature-list li { display: flex; gap: 1rem; align-items: flex-start; }
+    .feat-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: #EDE0FF; border-radius: 10px;
+      display: grid; place-items: center; font-size: 1rem; margin-top: .1rem;
+    }
+    .feat-text strong { display: block; font-size: .95rem; margin-bottom: .2rem; }
+    .feat-text span { font-size: .87rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin-top: 3.5rem; max-width: 600px; }
+    .step { display: flex; gap: 1.8rem; padding-bottom: 2.5rem; position: relative; }
+    .step:not(:last-child)::after {
+      content: ''; position: absolute;
+      left: 19px; top: 40px; bottom: 0; width: 2px;
+      background: linear-gradient(to bottom, var(--rose-lt), transparent);
+    }
+    .step-num {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border-radius: 50%; background: var(--grad); color: #fff;
+      display: grid; place-items: center;
+      font-family: 'DM Serif Display', serif; font-size: 1.1rem;
+    }
+    .step-content strong { font-size: .95rem; display: block; margin-bottom: .3rem; }
+    .step-content p { font-size: .87rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── TEAM (startup class placeholder) ── */
+    .team-grid { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
+    .team-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.6rem 2rem;
+      min-width: 180px;
+    }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #C97EE8, #6030F0);
+      margin-bottom: .8rem;
+    }
+    .team-card h4 { font-size: .95rem; font-weight: 600; }
+    .team-card span { font-size: .8rem; color: var(--muted); }
+
+    /* ── CTA FOOTER ── */
+    .cta-section {
+      background: var(--grad);
+      padding: 6rem 3rem; text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: #fff; max-width: 560px; margin: 0 auto .9rem;
+      line-height: 1.15;
+    }
+    .cta-section p { color: rgba(255,255,255,.75); font-size: 1.05rem; margin-bottom: 2.2rem; }
+    .btn-white {
+      background: #fff; color: var(--rose);
+      padding: .9rem 2.4rem; border-radius: 50px;
+      font-size: .95rem; font-weight: 600; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(0,0,0,.15);
+      transition: transform .2s;
+      display: inline-block;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    footer {
+      text-align: center; padding: 2rem;
+      font-size: .8rem; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── ANIMATIONS ── */
+    [data-fade] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    [data-fade].visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">Trace</span>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <span class="hero-badge">🩺 AI-Powered Women's Health</span>
+    <h1>Endometriosis detected <em>years earlier.</em></h1>
+    <p class="hero-sub">Trace uses machine learning on symptom patterns and imaging data to flag endometriosis risk — before the average 7-year delay in diagnosis.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn-primary">Request Early Access</a>
+      <a href="#how" class="btn-ghost">How It Works</a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="stat"><h3>1 in 10</h3><p>women have endometriosis</p></div>
+      <div class="stat"><h3>7.5 yrs</h3><p>average diagnosis delay</p></div>
+      <div class="stat"><h3>~89%</h3><p>ML model accuracy (pilot)</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<div class="section" data-fade>
+  <p class="label">The Problem</p>
+  <h2 class="section-title">A disease hiding in plain sight — for <em>years.</em></h2>
+  <p class="section-body">Women with endometriosis visit an average of 7 doctors before getting a diagnosis. The condition is routinely dismissed, misdiagnosed, and undertreated — costing careers, fertility, and quality of life.</p>
+  <div class="problem-grid">
+    <div class="problem-card"><p class="num">190M</p><p>women worldwide affected by endometriosis</p></div>
+    <div class="problem-card"><p class="num">$22B</p><p>annual economic burden in the US alone from missed work and treatment costs</p></div>
+    <div class="problem-card"><p class="num">67%</p><p>misdiagnosed with IBS, anxiety, or "normal" pain before correct diagnosis</p></div>
+  </div>
+</div>
+
+<!-- SOLUTION -->
+<div class="solution-wrapper">
+  <div class="two-col">
+    <div class="phone-mock" data-fade>
+      <div class="mock-tag">Risk Score: High</div>
+      <div class="mock-bar accent"></div>
+      <div class="mock-bar" style="width:80%"></div>
+      <div class="mock-chart">
+        <div class="bar-item" style="height:35%"></div>
+        <div class="bar-item" style="height:55%"></div>
+        <div class="bar-item" style="height:80%"></div>
+        <div class="bar-item" style="height:65%"></div>
+        <div class="bar-item" style="height:45%"></div>
+      </div>
+      <div class="mock-bar" style="width:50%"></div>
+    </div>
+    <div data-fade>
+      <p class="label">Our Solution</p>
+      <h2 class="section-title">ML that learns what doctors <em>miss.</em></h2>
+      <ul class="feature-list">
+        <li>
+          <div class="feat-icon">📋</div>
+          <div class="feat-text"><strong>Symptom pattern analysis</strong><span>Users log pain, cycle data, and symptoms. Our model detects high-risk patterns over time.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">🧬</div>
+          <div class="feat-text"><strong>Imaging-assisted classification</strong><span>Upload ultrasound reports or MRI data for deeper AI-assisted risk scoring.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">📊</div>
+          <div class="feat-text"><strong>Risk report for your doctor</strong><span>Export a structured, evidence-backed report to bring to your gynecologist appointment.</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section" id="how" data-fade>
+  <p class="label">How It Works</p>
+  <h2 class="section-title">From first symptom to <em>actionable insight.</em></h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Log your symptoms</strong>
+        <p>Track pain location, cycle regularity, fatigue, and bowel symptoms over a few weeks. Takes under 2 minutes a day.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Our model analyzes your data</strong>
+        <p>A fine-tuned classifier trained on clinical endometriosis datasets evaluates your pattern against validated risk indicators.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Get your risk score</strong>
+        <p>Receive a clear, jargon-free score and a ranked list of risk factors — not a diagnosis, but a strong signal to act on.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Take it to your doctor</strong>
+        <p>Download your EndoSense Report and bring it to your next gynecology appointment to start the right conversation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="section" data-fade>
+  <p class="label">The Team</p>
+  <h2 class="section-title">Built by engineers and <em>researchers.</em></h2>
+  <p class="section-body">A multidisciplinary team from EPFL's startup program, combining ML research, clinical informatics, and product design.</p>
+  <div class="team-grid">
+    <div class="team-card"><div class="avatar"></div><h4>ML Lead</h4><span>Model architecture & training</span></div>
+    <div class="team-card"><div class="avatar" style="background: linear-gradient(135deg,#F48FB1,#880E4F)"></div><h4>Clinical Advisor</h4><span>Gynecology & diagnostics</span></div>
+    <div class="team-card"><div class="avatar" style="background: linear-gradient(135deg,#F8BBD9,#C2185B)"></div><h4>Product & UX</h4><span>Patient experience design</span></div>
+    <div class="team-card"><div class="avatar" style="background: linear-gradient(135deg,#FCE4EC,#AD1457)"></div><h4>Backend Eng.</h4><span>Data pipeline & infra</span></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="waitlist">
+  <h2>Be among the first to try EndoSense.</h2>
+  <p>We're running a closed pilot in early 2026. Join the waitlist.</p>
+  <a href="mailto:hello@endosense.health" class="btn-white">Join the Waitlist →</a>
+</div>
+
+<footer>© 2026 EndoSense — EPFL Startup Class Project · Not a medical device. For informational purposes only.</footer>
+
+<script>
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('[data-fade]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
